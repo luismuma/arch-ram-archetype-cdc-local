@@ -18,4 +18,4 @@ on:
 jobs:
   validate-scaffolding:
     name: Validate Archetype Structure
-    uses: mapfre-tech/arch-ram-reusable-workflows/.github/workflows/validate-scaffolding.yml@feature/cdc-archetype
+    uses: luismuma/arch-ram-reusable-workflows-local/.github/workflows/validate-scaffolding.yml@main
