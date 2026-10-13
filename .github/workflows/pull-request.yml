@@ -1,0 +1,21 @@
+# Pull Request Workflow. Triggers when:
+#   - A pull request from feature to develop is created / synchronized
+#   - A pull request from hotfix to main is created / synchronized
+
+name: PR workflow
+run-name: "Validate Archetype PR #${{ github.run_number }}"
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    branches:
+      - develop
+      - main
+      - master
+  workflow_dispatch:
+jobs:
+  validate-scaffolding:
+    name: Validate Archetype Structure
+    uses: mapfre-tech/arch-ram-reusable-workflows/.github/workflows/validate-scaffolding.yml@feature/cdc-archetype

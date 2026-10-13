@@ -1,0 +1,109 @@
+extends: []
+
+rules:
+  kafka-structure:
+    description: "Valida kafka.yaml contra el JSON Schema"
+    message: "{{error}}"
+    severity: error
+    given: "$"
+    then:
+      function: schema
+      functionOptions:
+        allErrors: true
+        schema:
+          $schema: "https://json-schema.org/draft/2020-12/schema"
+          $id: "kafka.schema.json"
+          title: "Kafka Target Configuration"
+          description: "Schema para validar la configuracion de un destino Kafka"
+          type: object
+
+          required:
+            - env
+            - target_engine
+            - cluster_name
+            - cluster_id
+            - bootstrap_servers
+            - schema_registry_url
+            - schema_registry_id
+            - security_protocol
+            - sasl_mechanism
+            - identity_pool
+            - api_scope
+            - client_id
+            - client_secret_credential
+            - ogg_alias_credential
+
+          additionalProperties: false
+
+          properties:
+            env:
+              type: string
+              minLength: 1
+              pattern: '^(DEV|PRE|PRO|\$\{ENV\})$'
+              description: "Entorno de ejecución"
+
+            target_engine:
+              type: string
+              minLength: 1
+              pattern: '^(KAFKA|AWS-S3|\$\{TARGET_ENGINE\})$'
+              description: "Motor destino"
+
+            cluster_name:
+              type: string
+              pattern: '^([a-z0-9_-]+|\$\{CLUSTER_NAME\}|)$'
+              description: "Nombre del cluster Kafka"
+
+            cluster_id:
+              type: string
+              pattern: '^(lkc-[a-z0-9]+|\$\{CLUSTER_ID\}|)$'
+              description: "Identificador del cluster Confluent Kafka"
+
+            bootstrap_servers:
+              type: string
+              pattern: '^([a-z0-9.-]+:[0-9]+|\$\{BOOTSTRAP_SERVERS\}|)$'
+              description: "Servidor bootstrap de Kafka"
+
+            schema_registry_url:
+              type: string
+              pattern: '^(https://.*|\$\{SCHEMA_REGISTRY_URL\}|)$'
+              description: "URL del Schema Registry"
+
+            schema_registry_id:
+              type: string
+              pattern: '^(lsrc-[a-z0-9]+|\$\{SCHEMA_REGISTRY_ID\}|)$'
+              description: "Identificador del Schema Registry"
+
+            security_protocol:
+              type: string
+              pattern: '^(sasl_ssl|\$\{SECURITY_PROTOCOL\}|)$'
+              description: "Protocolo de seguridad Kafka"
+
+            sasl_mechanism:
+              type: string
+              pattern: '^(oauthbearer|\$\{SASL_MECHANISM\}|)$'
+              description: "Mecanismo de autenticación SASL"
+
+            identity_pool:
+              type: string
+              pattern: '^([a-z0-9_-]+|\$\{IDENTITY_POOL\}|)$'
+              description: "Identificador del identity pool"
+
+            api_scope:
+              type: string
+              pattern: '^(api://[a-z0-9-]+/\.default|\$\{API_SCOPE\}|)$'
+              description: "Scope utilizado para autenticación OAuth"
+
+            client_id:
+              type: string
+              pattern: '^([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}|\$\{CLIENT_ID\}|)$'
+              description: "Client ID utilizado para autenticación"
+
+            client_secret_credential:
+              type: string
+              pattern: '^([a-z0-9][a-z0-9_-]*|\$\{CLIENT_SECRET_CREDENTIAL\}|)$'
+              description: "Nombre de la credencial que contiene el client secret"
+
+            ogg_alias_credential:
+              type: string
+              pattern: '^([a-z0-9][a-z0-9_-]*|\$\{OGG_ALIAS_CREDENTIAL\}|)$'
+              description: "Nombre de la credencial utilizada para el alias OGG"

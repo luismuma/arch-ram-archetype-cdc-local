@@ -1,0 +1,73 @@
+extends: []
+
+rules:
+
+  db-connections-structure:
+    description: "Valida db_connections contra el JSON Schema"
+    message: "{{error}}"
+    severity: error
+    given: "$"
+    then:
+      function: schema
+      functionOptions:
+        allErrors: true
+        schema:
+          type: object
+
+          required:
+            - env
+            - bbdd_engine
+            - conn_name_prim
+            - conn_string_prim
+            - db_user
+            - password_credential
+            - pdb
+            - cdc_seq
+            - max_parallel
+
+          additionalProperties: false
+
+          properties:
+            env:
+              type: string
+              minLength: 1
+              pattern: '^(DEV|PRE|PRO|\$\{ENV\})$'
+
+            bbdd_engine:
+              type: string
+              minLength: 1
+              pattern: '^(ORACLE|\$\{BBDD_ENGINE\})$'
+
+            conn_name_prim:
+              type: string
+              pattern: '^([a-z0-9]+_prim_(dev|pre|pro)|\$\{CONN_NAME_PRIM\}|)$'
+
+            conn_string_prim:
+              type: string
+
+            conn_name_stby:
+              type: string
+              pattern: '^([a-z0-9]+_stby_(dev|pre|pro)|\$\{CONN_NAME_STBY\}|)$'
+
+            conn_string_stby:
+              type: string
+
+            db_user:
+              type: string
+              pattern: '^([a-z][a-z0-9_$#]*|\$\{DB_USER\}|)$'
+
+            password_credential:
+              type: string
+              pattern: '^([a-z0-9][a-z0-9_-]*|\$\{PASSWORD_CREDENTIAL\}|)$'
+
+            pdb:
+              type: string
+              pattern: '^([a-z][a-z0-9_$#]*|\$\{PDB\}|)$'
+
+            cdc_seq:
+              type: string
+              pattern: '^([a-z0-9]{2}|\$\{CDC_SEQ\}|)$'
+
+            max_parallel:
+              type: string
+              pattern: '^([1-9]|1[0-9]|20|\$\{MAX_PARALLEL\}|)$'
