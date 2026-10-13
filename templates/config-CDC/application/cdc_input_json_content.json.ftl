@@ -1,8 +1,8 @@
 {
-  "env": "${r"${ENV}"}",
+  "env": "${specificConfig.ENV}",
   "request_type": "${r"${REQUEST_TYPE}"}",
   "project": "${r"${PROJECT}"}",
-  "bbdd_engine": "${r"${BBDD_ENGINE}"}",
+  "bbdd_engine": "${specificConfig.BBDD_ENGINE}",
   "bbdd_name": "${r"${BBDD_NAME}"}",
   "tables": [
     "${r"${TABLES}"}"
