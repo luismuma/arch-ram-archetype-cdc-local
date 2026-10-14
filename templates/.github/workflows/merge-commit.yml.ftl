@@ -1,18 +1,24 @@
-﻿# Copyright (c) MAPFRE DevOps Platform
-#
-# Merge Commit Workflow. Triggers when:
-#   - A pull request to develop is closed and merged
-#   - A pull request to main is closed and merged
-#
-# acr-folder: The folder where the artifact will be stored in the Azure Container Registry. More information about naming conventions can be found here https://marketplace.mapfre.com/docs/default/mapfredocument/devopsplatformdoc/github-azure-container-registry/#using-azure-container-registry-on-github
-# Required secrets:
-#   - AZURE_ARTIFACTS_USER    (Organization)
-#   - AZURE_ARTIFACTS_PW      (Organization)
-#   - GH_TOKEN_ENCRYPTION_PASSPHRASE (Organization) more info in: https://docs.zeus.mapfre.com/8ba7b8109dad11d180b400c04fd430cf/1f7094066cf557db9391713055249220
+<#-- 
+  Merge Commit Workflow (FreeMarker Template)
+  Triggers when:
+   - A pull request to develop is closed and merged (Snapshot tag/package)
+   - A pull request to main/master is closed and merged (Release tag/package)
+
+  Required secrets:
+   - AZURE_ARTIFACTS_USER
+   - AZURE_ARTIFACTS_PW
+   - GH_TOKEN_ENCRYPTION_PASSPHRASE
+   - RAM_GITHUB_GIT_TOKEN (o EXTERNAL_GITHUB_TOKEN para compatibilidad)
+-->
 
 name: Merge Commit
 
-run-name: "Generate ${r"${{ fromJson(github.base_ref == 'main' || github.base_ref == 'master') && 'Release' || 'Snapshot' }}"} Artifact #${r"${{ github.run_number }}"}"
+run-name: "Generate ${r"${{ (github.base_ref == 'main' || github.base_ref == 'master') && 'Release' || 'Snapshot' }}"} Artifact #${r"${{ github.run_number }}"}"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 on:
   pull_request:
@@ -25,8 +31,14 @@ on:
 
 jobs:
   merge:
+    name: CDC Merge and Package Workflow
+    if: r"${{ github.event.pull_request.merged == true }}"
     uses: luismuma/arch-ram-reusable-workflows-local/.github/workflows/cdc.merge-commit.yml@main
+    
     secrets:
       AZURE_ARTIFACTS_USER: ${r"${{ secrets.AZURE_ARTIFACTS_USER }}"}
       AZURE_ARTIFACTS_PW: ${r"${{ secrets.AZURE_ARTIFACTS_PW }}"}
       GH_TOKEN_ENCRYPTION_PASSPHRASE: ${r"${{ secrets.GH_TOKEN_ENCRYPTION_PASSPHRASE }}"}
+      
+      <#-- Mapeo de tokens de GitHub compatibles -->
+      RAM_GITHUB_GIT_TOKEN: ${r"${{ secrets.RAM_GITHUB_GIT_TOKEN || secrets.EXTERNAL_GITHUB_TOKEN || secrets.GH_GIT_TOKEN }}"}
