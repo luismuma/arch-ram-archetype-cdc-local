@@ -9,6 +9,11 @@
 name: PR workflow
 run-name: ${r'"Build and Test #${{ github.run_number }}: ${{ github.event.pull_request.title }}"'}
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 on:
   pull_request:
     types:
