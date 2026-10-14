@@ -1,4 +1,3 @@
-﻿
 # Pull Request Workflow.
 # Triggers:
 #   - feature/* -> develop
@@ -6,7 +5,7 @@
 
 name: PR workflow
 
-run-name: "Build and Test #${{ github.run_number }}: ${{ github.event.pull_request.title }}"
+run-name: ${r'"Build and Test #${{ github.run_number }}: ${{ github.event.pull_request.title }}"'}
 
 permissions:
   contents: read
@@ -34,16 +33,15 @@ jobs:
     uses: luismuma/arch-ram-reusable-workflows-local/.github/workflows/cdc.pull-request.yml@main
 
     secrets:
-      # NUEVO: permite utilizar un token genérico.
-      # COMPATIBILIDAD: si no está definido, utiliza GH_GIT_TOKEN.
-      EXTERNAL_GITHUB_TOKEN: ${{ secrets.EXTERNAL_GITHUB_TOKEN || secrets.GH_GIT_TOKEN }}
+      # Permite utilizar el token genérico o el nombre anterior.
+      EXTERNAL_GITHUB_TOKEN: ${r"${{ secrets.EXTERNAL_GITHUB_TOKEN || secrets.GH_GIT_TOKEN }}"}
 
       # Contraseña para cifrado de tokens centralizados.
-      GH_TOKEN_ENCRYPTION_PASSPHRASE: ${{ secrets.GH_TOKEN_ENCRYPTION_PASSPHRASE }}
+      GH_TOKEN_ENCRYPTION_PASSPHRASE: ${r"${{ secrets.GH_TOKEN_ENCRYPTION_PASSPHRASE }}"}
 
       # Credenciales de Azure Artifacts.
-      AZURE_ARTIFACTS_USER: ${{ secrets.AZURE_ARTIFACTS_USER }}
-      AZURE_ARTIFACTS_PW: ${{ secrets.AZURE_ARTIFACTS_PW }}
+      AZURE_ARTIFACTS_USER: ${r"${{ secrets.AZURE_ARTIFACTS_USER }}"}
+      AZURE_ARTIFACTS_PW: ${r"${{ secrets.AZURE_ARTIFACTS_PW }}"}
 
-      # COMPATIBILIDAD: conservar si el reusable declara y utiliza este secreto.
-      GH_GIT_TOKEN: ${{ secrets.GH_GIT_TOKEN }}
+      # Compatibilidad con workflows que siguen utilizando GH_GIT_TOKEN.
+      GH_GIT_TOKEN: ${r"${{ secrets.GH_GIT_TOKEN }}"} 
