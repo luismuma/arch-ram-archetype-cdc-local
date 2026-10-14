@@ -27,7 +27,7 @@ on:
 jobs:
   pull-request:
     name: Build and Test
-    if: startsWith(github.head_ref, 'feature') || startsWith(github.head_ref, 'hotfix')
+    if: startsWith(github.head_ref, 'feature/') || startsWith(github.head_ref, 'hotfix/')
     uses: luismuma/arch-ram-reusable-workflows-local/.github/workflows/cdc.pull-request.yml@main
     
     secrets:
