@@ -25,7 +25,7 @@ on:
 
 jobs:
   merge:
-    uses: luismuma/arch-ram-reusable-workflows/.github/workflows/cdc.tests.merge-commit.yml@main
+    uses: luismuma/arch-ram-reusable-workflows-local/.github/workflows/cdc.merge-commit.yml@main
     secrets:
       AZURE_ARTIFACTS_USER: ${r"${{ secrets.AZURE_ARTIFACTS_USER }}"}
       AZURE_ARTIFACTS_PW: ${r"${{ secrets.AZURE_ARTIFACTS_PW }}"}
