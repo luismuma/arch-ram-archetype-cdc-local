@@ -14,7 +14,6 @@
 name: Merge Commit
 
 run-name: "Generate ${r"${{ (github.base_ref == 'main' || github.base_ref == 'master') && 'Release' || 'Snapshot' }}"} Artifact #${r"${{ github.run_number }}"}"
-
 permissions:
   contents: read
   pages: write
