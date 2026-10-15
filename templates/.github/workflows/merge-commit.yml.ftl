@@ -44,4 +44,6 @@ jobs:
       GH_TOKEN_ENCRYPTION_PASSPHRASE: ${r"${{ secrets.GH_TOKEN_ENCRYPTION_PASSPHRASE }}"}
 
       # Mapeo de tokens de GitHub compatibles.
-      RAM_GITHUB_GIT_TOKEN: ${r"${{ secrets.RAM_GITHUB_GIT_TOKEN || secrets.EXTERNAL_GITHUB_TOKEN || secrets.GH_GIT_TOKEN }}"}
+      # RAM_GITHUB_GIT_TOKEN: ${r"${{ secrets.RAM_GITHUB_GIT_TOKEN || secrets.EXTERNAL_GITHUB_TOKEN || secrets.GH_GIT_TOKEN }}"}
+      RAM_GITHUB_GIT_TOKEN: ${r"${{ secrets.GH_GIT_TOKEN }}"}
+
