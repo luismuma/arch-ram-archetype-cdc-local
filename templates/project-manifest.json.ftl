@@ -5,7 +5,7 @@
 
 {
   "version": "${VERSION!"1.0.0"?json_string}",
-  "name": "${(BBDD_ENGINE!"ORACLE")?upper_case?json_string}-${(BBDD_NAME!"")?upper_case?json_string}_${(ENV!"DEV")?upper_case?json_string}",
+  "name": "${(BBDD_ENGINE!"ORACLE")?upper_case?json_string}-${(VERSION!"1.0.0")?json_string}_${(ENV!"DEV")?upper_case?json_string}",
   "displayName": "${DISPLAY_NAME!("CDC " + (BBDD_ENGINE!"ORACLE")?upper_case + " - " + (BBDD_NAME!"")?upper_case + " - " + (ENV!"DEV")?upper_case)?json_string}",
   "description": "${DESCRIPTION!("Configuración CDC para " + (BBDD_NAME!"")?upper_case + " en entorno " + (ENV!"DEV")?upper_case)?json_string}",
   "status": "${STATUS!"draft"?json_string}",
