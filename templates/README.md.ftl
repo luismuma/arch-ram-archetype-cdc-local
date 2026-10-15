@@ -23,10 +23,19 @@ Contiene el arquetipo CDC para generar la configuración de replicación de dato
 ├── CONTRIBUTING.md
 └── README.md
 
-⚙️ Componentes principales
-config-CDC/application/: plantilla JSON de entrada para definir los parámetros de replicación CDC.
+## ⚙️ Componentes principales
 
-tests/: pruebas automatizadas de validación y renderizado de plantillas.
+
+* **`.github/`**: Contiene los workflows de GitHub Actions y la automatización de los procesos de CI/CD.
+* **`config-CDC/`**: Almacena las configuraciones y los ficheros de entrada específicos para el funcionamiento de Change Data Capture (CDC).
+* **`tests/`**: Conjunto de pruebas automatizadas, incluyendo validaciones de plantillas y tests de templating.
+* **`CHANGELOG.md`**: Registro histórico de cambios, correcciones y nuevas versiones del proyecto.
+* **`CONTRIBUTING.md`**: Guías, pautas y normas para colaborar y aportar código en el repositorio.
+* **`README.md`**: Documentación principal y guía de uso del proyecto.
+* **`project-manifest.json`**: Manifiesto del proyecto que define metadatos esenciales como nombre, versión y descripción.
+* **`pyproject.toml`**: Fichero de configuración del ecosistema Python (gestión de dependencias, herramientas y empaquetado).
+* **`security-metadata.toml`**: Metadatos de seguridad, gobernanza y cumplimiento normativo corporativo.
+
 
 .github/workflows/pull-request.yml: valida los cambios en los Pull Requests (feature/* → develop, hotfix/* → main).
 
